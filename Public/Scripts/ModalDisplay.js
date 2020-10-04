@@ -1,41 +1,54 @@
 
 
+var modal = document.getElementById("myModal");
 
-var modal = document.getElementById("Modal");
+var listItem = document.getElementsByClassName("item")
 
 var span = document.getElementsByClassName("close")[0];
 
 var info = document.getElementById("Info").innerHTML;
 
+
+
 // Show Modal trough Jquery. Pick up image ID and and change modal information accordingly.
-$(document).ready(function() {
-  $('img.mod').click(function() {
+  $(document).ready(function(){
+    $("#search").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#galleryList li").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+
+  $(document).on("click", "p.item", function(){
       modal.style.display = "block";
-      if(($(this).attr('id')) == 4){
-        console.log("it works")
-      }
-      if(($(this).attr('id')) == 3){
+      
+        let id = $(this).attr("id")
+
+         fetch('https://swapi.dev/api/people/'+id+'/')
+        .then((resp) => resp.json())
+        .then(function(data) {
+          let name = data.name;
+          let skin = data.skin_color;
+          let hair = data.hair_color;
+         
+
         
-        console.log("This is Rey")
-      }
-      if(($(this).attr('id')) == 2){
+         
+        document.getElementById("Info").innerHTML="This is "+name+". They have "+hair+ " hair and "+skin+" skin"
+          })
         
-        console.log("This is Poe")
-        document.getElementById("Info").innerHTML="This is Poe"
-      }
-      if(($(this).attr('id')) == 1){
-        console.log("This is FInn")
-        document.getElementById("Info").innerHTML="This is Finn"
-      }
+        .catch(function(error) {
+          console.log(error);
+        });
+ 
 
 
   });
 });
 
-document.getElementsByClassName("mod").onclick = function() {
-  
-  console.log("works")
-}
+
+
+
 
 span.onclick = function() {
   modal.style.display = "none";
@@ -46,3 +59,5 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
