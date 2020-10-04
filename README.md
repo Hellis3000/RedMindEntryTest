@@ -1,2 +1,2 @@
 # RedMindEntryTest
- RedMind Starwars test sinte
+ RedMind Starwars test site
